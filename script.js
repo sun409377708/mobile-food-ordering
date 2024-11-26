@@ -158,175 +158,212 @@ const menuItems = {
 };
 
 // 购物车数据
-let cart = [];
+let cart = {};
 
 // DOM 元素
-const categoryList = document.getElementById('category-list');
-const foodList = document.getElementById('food-list');
-const cartModal = document.getElementById('cart-modal');
-const cartItems = document.getElementById('cart-items');
-const cartCount = document.getElementById('cart-count');
-const totalPrice = document.getElementById('total-price');
-const cartBtn = document.getElementById('cart-btn');
-const closeCartBtn = document.getElementById('close-cart');
-const checkoutBtn = document.getElementById('checkout-btn');
+const categoryList = document.querySelector('.category-list');
+const foodList = document.querySelector('.food-list');
+const cartModal = document.querySelector('.cart-modal');
+const cartItems = document.querySelector('.cart-items');
+const cartCount = document.querySelector('.cart-count');
+const cartBtn = document.querySelector('.cart-btn');
+const closeCartBtn = document.querySelector('.cart-btn-small');
+const totalPrice = document.querySelector('.total-price');
+const checkoutBtn = document.querySelector('.checkout-btn');
 
 // 渲染分类列表
 function renderCategories() {
-    categoryList.innerHTML = categories.map((category, index) => `
-        <div class="category-item ${index === 0 ? 'active' : ''}" data-id="${category.id}">
-            ${category.name}
-        </div>
-    `).join('');
-
-    // 添加分类点击事件
-    const categoryItems = document.querySelectorAll('.category-item');
-    categoryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            // 更新active状态
-            categoryItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
-            
-            // 滚动到对应的商品区域
-            const categoryId = parseInt(item.dataset.id);
-            const foodSection = document.querySelector(`[data-category-id="${categoryId}"]`);
-            if (foodSection) {
-                foodSection.scrollIntoView({ behavior: 'smooth' });
+    categories.forEach((category, index) => {
+        const div = document.createElement('div');
+        div.className = `category-item ${index === 0 ? 'active' : ''}`;
+        div.textContent = category.name;
+        div.setAttribute('data-id', category.id);
+        div.addEventListener('click', () => {
+            // 移除其他分类的激活状态
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 添加当前分类的激活状态
+            div.classList.add('active');
+            // 滚动到对应的食品列表
+            const targetSection = document.querySelector(`[data-category="${category.id}"]`);
+            if (targetSection) {
+                foodList.scrollTo({
+                    top: targetSection.offsetTop - foodList.offsetTop,
+                    behavior: 'smooth'
+                });
             }
         });
+        categoryList.appendChild(div);
     });
 }
 
 // 渲染商品列表
 function renderFoodList() {
-    let html = '';
     categories.forEach(category => {
-        const foods = menuItems[category.id] || [];
-        if (foods.length > 0) {
-            html += `
-                <div class="food-section" data-category-id="${category.id}">
-                    <div class="food-section-title">${category.name}</div>
-                    ${foods.map(food => `
-                        <div class="food-item">
-                            <img class="food-item-img" src="${food.image}" alt="${food.name}">
-                            <div class="food-item-info">
-                                <h3 class="food-item-name">${food.name}</h3>
-                                <p class="food-item-desc">${food.description}</p>
-                                <p class="food-item-price">¥${food.price}</p>
-                            </div>
-                            <div class="food-item-action">
-                                <button class="add-to-cart" onclick="addToCart(${food.id})">加入购物车</button>
-                            </div>
-                        </div>
-                    `).join('')}
+        const section = document.createElement('div');
+        section.setAttribute('data-category', category.id);
+        
+        const title = document.createElement('div');
+        title.className = 'category-title';
+        title.textContent = category.name;
+        section.appendChild(title);
+        
+        const items = menuItems[category.id] || [];
+        items.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'food-item';
+            div.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="food-image">
+                <div class="food-info">
+                    <div>
+                        <div class="food-name">${item.name}</div>
+                        <div class="food-description">${item.description}</div>
+                        <div class="food-price">¥${item.price}</div>
+                    </div>
+                    <div class="cart-controls">
+                        ${cart[item.id] ? `
+                            <button class="cart-btn-small" onclick="removeFromCart(${item.id})">-</button>
+                            <span class="cart-count">${cart[item.id]}</span>
+                        ` : ''}
+                        <button class="cart-btn-small" onclick="addToCart(${item.id})">+</button>
+                    </div>
                 </div>
             `;
-        }
-    });
-    foodList.innerHTML = html;
-
-    // 监听商品列表的滚动
-    foodList.addEventListener('scroll', () => {
-        const sections = document.querySelectorAll('.food-section');
-        const categoryItems = document.querySelectorAll('.category-item');
+            section.appendChild(div);
+        });
         
+        foodList.appendChild(section);
+    });
+
+    // 监听滚动事件来更新分类激活状态
+    foodList.addEventListener('scroll', () => {
+        const sections = foodList.querySelectorAll('[data-category]');
         let currentSection = null;
-        sections.forEach((section) => {
+        
+        sections.forEach(section => {
             const rect = section.getBoundingClientRect();
-            if (rect.top <= 100 && rect.bottom >= 100) {
+            if (rect.top <= foodList.offsetTop + 100) {
                 currentSection = section;
             }
         });
-
+        
         if (currentSection) {
-            const categoryId = currentSection.dataset.categoryId;
-            categoryItems.forEach(item => {
-                if (item.dataset.id === categoryId) {
-                    item.classList.add('active');
-                } else {
-                    item.classList.remove('active');
-                }
+            const categoryId = currentSection.getAttribute('data-category');
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.classList.toggle('active', 
+                    item.getAttribute('data-id') === categoryId);
             });
-
-            // 确保左侧分类列表可以看到当前激活的分类
-            const activeCategory = document.querySelector('.category-item.active');
-            if (activeCategory) {
-                activeCategory.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }
         }
     });
 }
 
 // 添加到购物车
 function addToCart(id) {
-    let targetItem = null;
-    // 在所有分类中查找商品
-    Object.values(menuItems).forEach(foods => {
-        const found = foods.find(item => item.id === id);
-        if (found) targetItem = found;
-    });
-
-    if (!targetItem) return;
-
-    const cartItem = cart.find(item => item.id === id);
-
-    if (cartItem) {
-        cartItem.quantity += 1;
-    } else {
-        cart.push({
-            ...targetItem,
-            quantity: 1
-        });
-    }
-
+    cart[id] = (cart[id] || 0) + 1;
     updateCart();
+    updateFoodList();
 }
 
 // 从购物车移除
 function removeFromCart(id) {
-    cart = cart.filter(item => item.id !== id);
-    updateCart();
+    if (cart[id] > 0) {
+        cart[id]--;
+        if (cart[id] === 0) {
+            delete cart[id];
+        }
+        updateCart();
+        updateFoodList();
+    }
 }
 
 // 更新购物车显示
 function updateCart() {
-    // 更新购物车数量
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    cartCount.textContent = totalItems;
+    // 更新购物车计数
+    const totalCount = Object.values(cart).reduce((sum, count) => sum + count, 0);
+    cartCount.textContent = totalCount;
 
     // 更新购物车列表
-    cartItems.innerHTML = cart.map(item => `
-        <div class="cart-item">
-            <span>${item.name} x ${item.quantity}</span>
-            <span>¥${item.price * item.quantity}</span>
-            <button onclick="removeFromCart(${item.id})">删除</button>
-        </div>
-    `).join('');
+    cartItems.innerHTML = '';
+    let total = 0;
 
-    // 更新总价
-    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    totalPrice.textContent = total;
+    Object.entries(cart).forEach(([id, count]) => {
+        const item = findItemById(parseInt(id));
+        if (item) {
+            const itemTotal = item.price * count;
+            total += itemTotal;
+            
+            const div = document.createElement('div');
+            div.className = 'cart-item';
+            div.innerHTML = `
+                <div>
+                    <span>${item.name}</span>
+                    <span class="cart-item-price">¥${item.price}</span>
+                </div>
+                <div class="cart-controls">
+                    <button class="cart-btn-small" onclick="removeFromCart(${id})">-</button>
+                    <span class="cart-count">${count}</span>
+                    <button class="cart-btn-small" onclick="addToCart(${id})">+</button>
+                </div>
+            `;
+            cartItems.appendChild(div);
+        }
+    });
+
+    totalPrice.textContent = `¥${total}`;
+}
+
+// 更新食品列表中的购物车控件
+function updateFoodList() {
+    document.querySelectorAll('.food-item').forEach(item => {
+        const controls = item.querySelector('.cart-controls');
+        const addButton = controls.querySelector('button:last-child');
+        const id = parseInt(addButton.getAttribute('onclick').match(/\d+/)[0]);
+        
+        if (cart[id]) {
+            controls.innerHTML = `
+                <button class="cart-btn-small" onclick="removeFromCart(${id})">-</button>
+                <span class="cart-count">${cart[id]}</span>
+                <button class="cart-btn-small" onclick="addToCart(${id})">+</button>
+            `;
+        } else {
+            controls.innerHTML = `
+                <button class="cart-btn-small" onclick="addToCart(${id})">+</button>
+            `;
+        }
+    });
+}
+
+// 查找商品
+function findItemById(id) {
+    for (const items of Object.values(menuItems)) {
+        const item = items.find(item => item.id === id);
+        if (item) return item;
+    }
+    return null;
 }
 
 // 结算功能
 function checkout() {
-    if (cart.length === 0) {
-        alert('购物车是空的！');
+    if (Object.keys(cart).length === 0) {
+        alert('购物车是空的');
         return;
     }
     alert('订单提交成功！');
-    cart = [];
+    cart = {};
     updateCart();
-    cartModal.style.display = 'none';
+    updateFoodList();
+    cartModal.classList.remove('active');
 }
 
 // 事件监听
 cartBtn.addEventListener('click', () => {
-    cartModal.style.display = 'block';
+    cartModal.classList.add('active');
+    updateCart();
 });
 
 closeCartBtn.addEventListener('click', () => {
-    cartModal.style.display = 'none';
+    cartModal.classList.remove('active');
 });
 
 checkoutBtn.addEventListener('click', checkout);
