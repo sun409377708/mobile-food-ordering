@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美味外卖店</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>美味外卖店</h1>
+        <div class="cart-container">
+            <button id="cart-btn">购物车 <span id="cart-count">0</span></button>
+        </div>
+    </header>
+
+    <main>
+        <div class="menu-container">
+            <h2>菜品列表</h2>
+            <div class="menu-items" id="menu-items">
+                <!-- 菜品将通过 JavaScript 动态添加 -->
+            </div>
+        </div>
+
+        <div class="cart-modal" id="cart-modal">
+            <div class="cart-content">
+                <h3>购物车</h3>
+                <div id="cart-items"></div>
+                <div class="cart-total">
+                    <p>总计: ¥<span id="total-price">0</span></p>
+                </div>
+                <button id="checkout-btn">结算</button>
+                <button id="close-cart">关闭</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
