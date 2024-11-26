@@ -17,13 +17,13 @@
 
 ## 在线预览
 
-[点击预览](https://你的GitHub用户名.github.io/mobile-food-ordering/)
+[点击预览](https://sun409377708.github.io/mobile-food-ordering/)
 
 ## 本地运行
 
 1. 克隆仓库
 ```bash
-git clone https://github.com/你的GitHub用户名/mobile-food-ordering.git
+git clone https://github.com/sun409377708/mobile-food-ordering.git
 ```
 
 2. 进入项目目录
