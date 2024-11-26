@@ -1,3 +1,15 @@
+/* 变量定义
+-------------------------------------------------- */
+:root {
+    --primary-color: #FF6B6B;
+    --secondary-color: #4ECDC4;
+    --background-color: #f8f9fa;
+    --text-color: #2d3436;
+    --border-color: #e9ecef;
+}
+
+/* 基础样式
+-------------------------------------------------- */
 * {
     margin: 0;
     padding: 0;
@@ -7,12 +19,15 @@
 
 body {
     font-family: Arial, sans-serif;
-    line-height: 1.6;
     background-color: #f4f4f4;
+    color: #2d3436;
+    line-height: 1.6;
     height: 100vh;
     overflow: hidden;
 }
 
+/* 头部样式
+-------------------------------------------------- */
 header {
     background-color: #ff6b6b;
     color: white;
@@ -33,33 +48,29 @@ h1 {
     margin: 0;
 }
 
-.cart-container button {
-    padding: 0.5rem 1rem;
-    background-color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
+/* 主容器样式
+-------------------------------------------------- */
 main {
     margin-top: 60px;
     height: calc(100vh - 60px);
     overflow: hidden;
+    display: flex;
 }
 
+/* 分类列表样式
+-------------------------------------------------- */
 .menu-container {
     display: flex;
     height: 100%;
 }
 
-/* 左侧分类列表 */
 .category-list {
     width: 85px;
     background-color: #f8f8f8;
     overflow-y: auto;
     height: 100%;
     -webkit-overflow-scrolling: touch;
+    border-right: 1px solid var(--border-color);
 }
 
 .category-item {
@@ -70,12 +81,14 @@ main {
     border-bottom: 1px solid #eee;
     position: relative;
     color: #666;
+    transition: all 0.3s ease;
 }
 
 .category-item.active {
     background-color: #fff;
     color: #ff6b6b;
     font-weight: bold;
+    border-left: 3px solid var(--primary-color);
 }
 
 .category-item.active::before {
@@ -88,12 +101,14 @@ main {
     background-color: #ff6b6b;
 }
 
-/* 右侧商品列表 */
+/* 食品列表样式
+-------------------------------------------------- */
 .food-list {
     flex: 1;
     overflow-y: auto;
     background-color: #fff;
     -webkit-overflow-scrolling: touch;
+    padding: 10px;
 }
 
 .food-section {
@@ -116,6 +131,10 @@ main {
     padding: 12px;
     border-bottom: 1px solid #f0f0f0;
     position: relative;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .food-item-img {
@@ -129,6 +148,9 @@ main {
 .food-item-info {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .food-item-name {
@@ -169,13 +191,27 @@ main {
     border-radius: 20px;
     cursor: pointer;
     font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .add-to-cart:active {
     background-color: #ff5252;
 }
 
-/* 购物车样式 */
+/* 购物车样式
+-------------------------------------------------- */
+.cart-container button {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
 .cart-modal {
     display: none;
     position: fixed;
@@ -197,6 +233,12 @@ main {
     border-radius: 16px 16px 0 0;
     max-height: 80vh;
     overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.cart-content.active {
+    transform: translateY(0);
 }
 
 .cart-content h3 {
@@ -248,13 +290,15 @@ main {
     color: #666;
 }
 
-/* 滚动条样式 */
+/* 滚动条样式
+-------------------------------------------------- */
 ::-webkit-scrollbar {
     width: 0;
     background: transparent;
 }
 
-/* 适配不同屏幕尺寸 */
+/* 适配不同屏幕尺寸
+-------------------------------------------------- */
 @media screen and (min-width: 768px) {
     .menu-container {
         max-width: 768px;
