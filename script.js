@@ -91,21 +91,14 @@ const menuItems = {
             id: 401,
             name: '红烧肉',
             price: 32,
-            image: 'https://images.unsplash.com/photo-1544025162-d76694265947',
+            image: 'images/dog.jpg',
             description: '传统美食，肥而不腻'
-        },
-        {
-            id: 402,
-            name: '青椒肉丝',
-            price: 26,
-            image: 'https://images.unsplash.com/photo-1563379926898-05f4575a45d8',
-            description: '家常小炒，清淡可口'
         },
         {
             id: 403,
             name: '糖醋排骨',
             price: 36,
-            image: 'https://images.unsplash.com/photo-1544025162-d76694265947',
+            image: 'images/cat.jpg',
             description: '酸甜可口，开胃下饭'
         }
     ],
@@ -136,7 +129,7 @@ const menuItems = {
         {
             id: 601,
             name: '珍珠奶茶',
-            price: 12,
+            price: 2500,
             image: 'images/bubble-tea.jpg',
             description: '香浓奶茶，珍珠弹牙'
         },
