@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  },
+  "name": "windsurf-project",
+  "version": "1.0.0",
+  "description": "一个移动端友好的食品订购网页应用，灵感来自美团外卖的交互设计。",
+  "main": "download_images.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

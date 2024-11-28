@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外卖发展史 - 小张点餐器</title>
+    <style>
+        :root {
+            --primary-color: #FF6B6B;
+            --secondary-color: #4ECDC4;
+            --background-color: #f8f9fa;
+            --text-color: #2d3436;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+        }
+
+        .header {
+            height: 80px;
+            background: linear-gradient(rgba(255, 107, 107, 0.7), rgba(255, 107, 107, 0.7)),
+                        url('https://source.unsplash.com/featured/1920x1080/?vintage,restaurant') center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .back-link {
+            margin-right: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 60px;
+            position: relative;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h2 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                        url('https://source.unsplash.com/featured/1920x1080/?food-delivery') center/cover;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+        }
+
+        .footer p {
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .photo-attribution {
+            position: absolute;
+            bottom: 5px;
+            right: 10px;
+            font-size: 0.8rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .photo-attribution a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .photo-attribution a:hover {
+            text-decoration: underline;
+        }
+
+        .timeline-item {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html" class="back-link">←</a>
+        <h1>外卖发展史</h1>
+    </header>
+
+    <main class="content">
+        <div class="timeline">
+            <div class="timeline-item">
+                <img src="https://source.unsplash.com/featured/1920x1080/?ancient,cooking" alt="古代外卖" class="timeline-image">
+                <div class="timeline-content">
+                    <h2>古代的"外卖"</h2>
+                    <p>早在古代，就有了类似外卖的服务。在中国古代的茶馆、酒楼等场所，就提供着类似"打包"的服务。商人们往往会将食物打包带回店铺享用。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <img src="https://source.unsplash.com/featured/1920x1080/?vintage,restaurant" alt="近代外卖" class="timeline-image">
+                <div class="timeline-content">
+                    <h2>近代外卖的兴起</h2>
+                    <p>19世纪末20世纪初，随着城市化进程的加快，外卖服务开始在各大城市兴起。餐馆开始提供送餐服务，主要通过电话预订和人工配送。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <img src="https://source.unsplash.com/featured/1920x1080/?smartphone,food-delivery" alt="互联网时代" class="timeline-image">
+                <div class="timeline-content">
+                    <h2>互联网时代的变革</h2>
+                    <p>随着互联网技术的发展，外卖行业迎来了革命性的变化。移动支付、实时配送追踪、智能调度系统等技术的应用，使得外卖服务变得更加便捷和高效。</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <img src="https://source.unsplash.com/featured/1920x1080/?future,robot" alt="未来展望" class="timeline-image">
+                <div class="timeline-content">
+                    <h2>未来展望</h2>
+                    <p>随着人工智能、无人机配送等新技术的发展，外卖行业将迎来更多创新。智能机器人送餐、3D打印食物等新概念可能成为现实。</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2024 小张点餐器</p>
+        <p>图片来自 Unsplash</p>
+    </footer>
+    <script src="unsplash.js"></script>
+</body>
+</html>
